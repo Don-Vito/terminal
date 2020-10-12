@@ -233,6 +233,7 @@ private:
 
     bool _snapOnInput;
     bool _altGrAliasing;
+    bool _altSpacePassThrough;
     bool _suppressApplicationTitle;
 
 #pragma region Text Selection

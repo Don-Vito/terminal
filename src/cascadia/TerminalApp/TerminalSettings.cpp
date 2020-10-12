@@ -79,6 +79,7 @@ namespace winrt::TerminalApp::implementation
         _HistorySize = profile.HistorySize();
         _SnapOnInput = profile.SnapOnInput();
         _AltGrAliasing = profile.AltGrAliasing();
+        _AltSpacePassThrough = profile.AltSpacePassThrough();
         _CursorHeight = profile.CursorHeight();
         _CursorShape = profile.CursorShape();
 

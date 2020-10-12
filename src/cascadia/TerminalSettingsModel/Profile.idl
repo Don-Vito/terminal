@@ -66,5 +66,7 @@ namespace Microsoft.Terminal.Settings.Model
 
         Microsoft.Terminal.TerminalControl.CursorStyle CursorShape;
         UInt32 CursorHeight;
+
+        Boolean AltSpacePassThrough;
     }
 }

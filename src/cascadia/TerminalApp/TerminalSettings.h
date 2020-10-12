@@ -62,6 +62,7 @@ namespace winrt::TerminalApp::implementation
 
         GETSET_PROPERTY(bool, SnapOnInput, true);
         GETSET_PROPERTY(bool, AltGrAliasing, true);
+        GETSET_PROPERTY(bool, AltSpacePassThrough, false);
         GETSET_PROPERTY(uint32_t, CursorColor, DEFAULT_CURSOR_COLOR);
         GETSET_PROPERTY(Microsoft::Terminal::TerminalControl::CursorStyle, CursorShape, Microsoft::Terminal::TerminalControl::CursorStyle::Vintage);
         GETSET_PROPERTY(uint32_t, CursorHeight, DEFAULT_CURSOR_HEIGHT);

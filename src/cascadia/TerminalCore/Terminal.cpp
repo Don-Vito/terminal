@@ -46,6 +46,7 @@ Terminal::Terminal() :
     _scrollOffset{ 0 },
     _snapOnInput{ true },
     _altGrAliasing{ true },
+    _altSpacePassThrough{ false },
     _blockSelection{ false },
     _selection{ std::nullopt }
 {
@@ -143,6 +144,8 @@ void Terminal::UpdateSettings(ICoreSettings settings)
 
     _snapOnInput = settings.SnapOnInput();
     _altGrAliasing = settings.AltGrAliasing();
+    _altSpacePassThrough = settings.AltSpacePassThrough();
+
     _wordDelimiters = settings.WordDelimiters();
     _suppressApplicationTitle = settings.SuppressApplicationTitle();
     _startingTitle = settings.StartingTitle();
@@ -486,10 +489,8 @@ bool Terminal::SendKeyEvent(const WORD vkey,
 
     const auto isAltOnlyPressed = states.IsAltPressed() && !states.IsCtrlPressed();
 
-    // DON'T manually handle Alt+Space - the system will use this to bring up
-    // the system menu for restore, min/maximize, size, move, close.
-    // (This doesn't apply to Ctrl+Alt+Space.)
-    if (isAltOnlyPressed && vkey == VK_SPACE)
+    // Delay the decision regarding Alt+Space until the character handler
+    if (isAltOnlyPressed && vkey == VK_SPACE && !_altSpacePassThrough)
     {
         return false;
     }
@@ -566,7 +567,7 @@ bool Terminal::SendCharEvent(const wchar_t ch, const WORD scanCode, const Contro
 {
     // DON'T manually handle Alt+Space - the system will use this to bring up
     // the system menu for restore, min/maximize, size, move, close.
-    if (ch == L' ' && states.IsAltPressed() && !states.IsCtrlPressed())
+    if (ch == L' ' && states.IsAltPressed() && !states.IsCtrlPressed() && !_altSpacePassThrough)
     {
         return false;
     }

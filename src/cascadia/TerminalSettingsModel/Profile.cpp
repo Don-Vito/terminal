@@ -34,6 +34,7 @@ static constexpr std::string_view SuppressApplicationTitleKey{ "suppressApplicat
 static constexpr std::string_view HistorySizeKey{ "historySize" };
 static constexpr std::string_view SnapOnInputKey{ "snapOnInput" };
 static constexpr std::string_view AltGrAliasingKey{ "altGrAliasing" };
+static constexpr std::string_view AltSpacePassThroughKey{ "altSpacePassThrough" };
 static constexpr std::string_view CursorColorKey{ "cursorColor" };
 static constexpr std::string_view CursorShapeKey{ "cursorShape" };
 static constexpr std::string_view CursorHeightKey{ "cursorHeight" };
@@ -211,6 +212,7 @@ void Profile::LayerJson(const Json::Value& json)
     JsonUtils::GetValueForKey(json, HistorySizeKey, _HistorySize);
     JsonUtils::GetValueForKey(json, SnapOnInputKey, _SnapOnInput);
     JsonUtils::GetValueForKey(json, AltGrAliasingKey, _AltGrAliasing);
+    JsonUtils::GetValueForKey(json, AltSpacePassThroughKey, _AltSpacePassThrough);
     JsonUtils::GetValueForKey(json, CursorHeightKey, _CursorHeight);
     JsonUtils::GetValueForKey(json, CursorShapeKey, _CursorShape);
     JsonUtils::GetValueForKey(json, TabTitleKey, _TabTitle);

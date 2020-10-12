@@ -111,6 +111,7 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
         GETSET_PROPERTY(int32_t, HistorySize, DEFAULT_HISTORY_SIZE);
         GETSET_PROPERTY(bool, SnapOnInput, true);
         GETSET_PROPERTY(bool, AltGrAliasing, true);
+        GETSET_PROPERTY(bool, AltSpacePassThrough, false);
 
         GETSET_PROPERTY(Microsoft::Terminal::TerminalControl::CursorStyle, CursorShape, Microsoft::Terminal::TerminalControl::CursorStyle::Bar);
         GETSET_PROPERTY(uint32_t, CursorHeight, DEFAULT_CURSOR_HEIGHT);
