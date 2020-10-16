@@ -646,7 +646,7 @@ namespace winrt::TerminalApp::implementation
     //      currently displayed, it will be shown.
     // Arguments:
     // - settings: the TerminalSettings object to use to create the TerminalControl with.
-    void TerminalPage::_CreateNewTabFromSettings(GUID profileGuid, TerminalApp::TerminalSettings settings)
+    winrt::com_ptr<Tab> TerminalPage::_CreateNewTabFromSettings(GUID profileGuid, TerminalApp::TerminalSettings settings)
     {
         // Initialize the new tab
 
@@ -740,6 +740,7 @@ namespace winrt::TerminalApp::implementation
         // This kicks off TabView::SelectionChanged, in response to which
         // we'll attach the terminal's Xaml control to the Xaml root.
         _tabView.SelectedItem(tabViewItem);
+        return newTabImpl;
     }
 
     // Method Description:
@@ -1009,12 +1010,20 @@ namespace winrt::TerminalApp::implementation
                 // because we won't be able to create a new instance of the
                 // connection without keeping an instance of the original Profile
                 // object around.
-
                 const auto& profileGuid = focusedTab->GetFocusedProfile();
                 if (profileGuid.has_value())
                 {
                     const auto settings{ winrt::make<TerminalSettings>(_settings, profileGuid.value(), *_bindings) };
-                    _CreateNewTabFromSettings(profileGuid.value(), settings);
+                    const auto newTab = _CreateNewTabFromSettings(profileGuid.value(), settings);
+
+                    const auto pfnTermControlFactory = [this, newTab, profileGuid, settings] {
+                        const auto controlConnection = _CreateConnectionFromSettings(profileGuid.value(), settings);
+                        TermControl newControl{ settings, controlConnection };
+                        _RegisterTerminalEvents(newControl, *newTab);
+                        return newControl;
+                    };
+
+                    focusedTab->DuplicatePanes(newTab, profileGuid.value(), settings, pfnTermControlFactory);
                 }
             }
             CATCH_LOG();

@@ -70,6 +70,8 @@ namespace winrt::TerminalApp::implementation
 
         void UpdateTabViewIndex(const uint32_t idx);
 
+        void DuplicatePanes(winrt::com_ptr<Tab> newTab, const GUID& profileGuid, const TerminalApp::TerminalSettings& settings, std::function<winrt::Microsoft::Terminal::TerminalControl::TermControl()> pfnTermControlFactory);
+
         WINRT_CALLBACK(Closed, winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>);
         WINRT_CALLBACK(PropertyChanged, Windows::UI::Xaml::Data::PropertyChangedEventHandler);
         DECLARE_EVENT(ActivePaneChanged, _ActivePaneChangedHandlers, winrt::delegate<>);
@@ -122,6 +124,8 @@ namespace winrt::TerminalApp::implementation
         void _ClearTabBackgroundColor();
 
         void _MakeSwitchToTabCommand();
+
+        std::shared_ptr<Pane> _DuplicatePanes(std::shared_ptr<Pane> sourcePane, std::shared_ptr<Pane> newPane, const GUID& profileGuid, const TerminalApp::TerminalSettings& settings, std::function<winrt::Microsoft::Terminal::TerminalControl::TermControl()> pfnTermControlFactory);
 
         friend class ::TerminalAppLocalTests::TabTests;
     };

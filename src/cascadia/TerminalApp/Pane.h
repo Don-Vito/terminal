@@ -75,6 +75,10 @@ public:
     void Maximize(std::shared_ptr<Pane> zoomedPane);
     void Restore(std::shared_ptr<Pane> zoomedPane);
 
+    std::shared_ptr<Pane> GetFirstChild() const;
+    std::shared_ptr<Pane> GetSecondChild() const;
+    winrt::Microsoft::Terminal::Settings::Model::SplitState GetSplitState() const;
+
     WINRT_CALLBACK(Closed, winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>);
     DECLARE_EVENT(GotFocus, _GotFocusHandlers, winrt::delegate<std::shared_ptr<Pane>>);
 

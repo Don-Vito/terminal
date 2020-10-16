@@ -321,6 +321,7 @@ namespace winrt::TerminalApp::implementation
     {
         auto [first, second] = _activePane->Split(splitType, profile, control);
         _activePane = first;
+
         _AttachEventHandlersToControl(control);
 
         // Add a event handlers to the new panes' GotFocus event. When the pane
@@ -1057,6 +1058,54 @@ namespace winrt::TerminalApp::implementation
     {
         TabViewIndex(idx);
         SwitchToTabCommand().Action().Args().as<SwitchToTabArgs>().TabIndex(idx);
+    }
+
+    // Method Description:
+    // - Recursively duplicates all panes of the current tab
+    // Arguments:
+    // - newTab - destination tab to duplicate tabs to
+    // - profileGuid - identifies the profile to use
+    // - terminalSettings - settings to use
+    // - pfnTermControlFactory factory for creating TermControls for each new pane
+    // Return Value:
+    // - <none>
+    void Tab::DuplicatePanes(winrt::com_ptr<Tab> newTab, const GUID& profileGuid, const TerminalApp::TerminalSettings& settings, std::function<winrt::Microsoft::Terminal::TerminalControl::TermControl()> pfnTermControlFactory)
+    {
+        auto focusedPane = newTab->_DuplicatePanes(_rootPane, newTab->_rootPane, profileGuid, settings, pfnTermControlFactory);
+        focusedPane->SetActive();
+    }
+
+    std::shared_ptr<Pane> Tab::_DuplicatePanes(std::shared_ptr<Pane> sourcePane, std::shared_ptr<Pane> newPane, const GUID& profileGuid, const TerminalApp::TerminalSettings& settings, std::function<winrt::Microsoft::Terminal::TerminalControl::TermControl()> pfnTermControlFactory)
+    {
+        const auto sourceFirstChild = sourcePane->GetFirstChild();
+        const auto sourceSecondChild = sourcePane->GetSecondChild();
+
+        if (sourceFirstChild && sourceSecondChild)
+        {
+            auto control{ pfnTermControlFactory() };
+            const auto [firstChild, secondChild] = newPane->Split(sourcePane->GetSplitState(), profileGuid, control);
+            _activePane = firstChild;
+            _AttachEventHandlersToControl(control);
+            _AttachEventHandlersToPane(firstChild);
+            _AttachEventHandlersToPane(secondChild);
+
+            const auto focusFirst = _DuplicatePanes(sourceFirstChild, firstChild, profileGuid, settings, pfnTermControlFactory);
+            const auto focusSecond = _DuplicatePanes(sourceSecondChild, secondChild, profileGuid, settings, pfnTermControlFactory);
+            return focusFirst ? focusFirst : focusSecond;
+        }
+
+        if (sourceFirstChild)
+        {
+            return _DuplicatePanes(sourceFirstChild, newPane, profileGuid, settings, pfnTermControlFactory);
+        }
+
+        if (sourceSecondChild)
+        {
+            return _DuplicatePanes(sourceFirstChild, newPane, profileGuid, settings, pfnTermControlFactory);
+        }
+
+        // Leaf
+        return sourcePane->GetActivePane() ? newPane : nullptr;
     }
 
     DEFINE_EVENT(Tab, ActivePaneChanged, _ActivePaneChangedHandlers, winrt::delegate<>);

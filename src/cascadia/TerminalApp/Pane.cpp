@@ -2021,4 +2021,19 @@ std::optional<SplitState> Pane::PreCalculateAutoSplit(const std::shared_ptr<Pane
     FAIL_FAST();
 }
 
+std::shared_ptr<Pane> Pane::GetFirstChild() const
+{
+    return _firstChild;
+}
+
+std::shared_ptr<Pane> Pane::GetSecondChild() const
+{
+    return _secondChild;
+}
+
+winrt::Microsoft::Terminal::Settings::Model::SplitState Pane::GetSplitState() const
+{
+    return _splitState;
+}
+
 DEFINE_EVENT(Pane, GotFocus, _GotFocusHandlers, winrt::delegate<std::shared_ptr<Pane>>);
