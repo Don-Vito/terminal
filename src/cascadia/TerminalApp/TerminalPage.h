@@ -61,6 +61,7 @@ namespace winrt::TerminalApp::implementation
         void ToggleFocusMode();
         void ToggleFullscreen();
         void ToggleAlwaysOnTop();
+        bool IsCreated() const;
         bool FocusMode() const;
         bool Fullscreen() const;
         bool AlwaysOnTop() const;
@@ -102,6 +103,7 @@ namespace winrt::TerminalApp::implementation
         winrt::com_ptr<Tab> _GetStrongTabImpl(const ::winrt::TerminalApp::Tab& tab) const;
         void _UpdateTabIndices();
 
+        bool _isCreated{ false };
         bool _isInFocusMode{ false };
         bool _isFullscreen{ false };
         bool _isAlwaysOnTop{ false };

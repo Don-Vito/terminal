@@ -34,14 +34,13 @@ namespace winrt::TerminalApp::implementation
 
         bool FocusMode() const;
         bool Fullscreen() const;
-        bool AlwaysOnTop() const;
+        bool AlwaysOnTop();
 
         Windows::Foundation::Size GetLaunchDimensions(uint32_t dpi);
         TerminalApp::InitialPosition GetInitialPosition(int64_t defaultInitialX, int64_t defaultInitialY);
         winrt::Windows::UI::Xaml::ElementTheme GetRequestedTheme();
         Microsoft::Terminal::Settings::Model::LaunchMode GetLaunchMode();
         bool GetShowTabsInTitlebar();
-        bool GetInitialAlwaysOnTop();
         float CalcSnappedDimension(const bool widthOrHeight, const float dimension) const;
 
         Windows::UI::Xaml::UIElement GetRoot() noexcept;

@@ -615,17 +615,6 @@ namespace winrt::TerminalApp::implementation
         return _settings.GlobalSettings().ShowTabsInTitlebar();
     }
 
-    bool AppLogic::GetInitialAlwaysOnTop()
-    {
-        if (!_loadedInitialSettings)
-        {
-            // Load settings if we haven't already
-            LoadSettings();
-        }
-
-        return _settings.GlobalSettings().AlwaysOnTop();
-    }
-
     // Method Description:
     // - See Pane::CalcSnappedDimension
     float AppLogic::CalcSnappedDimension(const bool widthOrHeight, const float dimension) const
@@ -1068,9 +1057,20 @@ namespace winrt::TerminalApp::implementation
         return _root ? _root->Fullscreen() : false;
     }
 
-    bool AppLogic::AlwaysOnTop() const
+    bool AppLogic::AlwaysOnTop()
     {
-        return _root ? _root->AlwaysOnTop() : false;
+        if (_root && _root->IsCreated())
+        {
+            return _root->AlwaysOnTop();
+        }
+
+        if (!_loadedInitialSettings)
+        {
+            // Load settings if we haven't already
+            LoadSettings();
+        }
+
+        return _settings.GlobalSettings().AlwaysOnTop();
     }
 
     // -------------------------------- WinRT Events ---------------------------------

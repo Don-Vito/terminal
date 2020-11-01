@@ -241,6 +241,7 @@ namespace winrt::TerminalApp::implementation
         _layoutUpdatedRevoker = _tabContent.LayoutUpdated(winrt::auto_revoke, { this, &TerminalPage::_OnFirstLayout });
 
         _isAlwaysOnTop = _settings.GlobalSettings().AlwaysOnTop();
+        _isCreated = true;
     }
 
     // Method Description:
@@ -2547,6 +2548,11 @@ namespace winrt::TerminalApp::implementation
             _GetStrongTabImpl(index.value())->SetFocused(true);
             _UpdateMRUTab(index.value());
         }
+    }
+
+    bool TerminalPage::IsCreated() const
+    {
+        return _isCreated;
     }
 
     bool TerminalPage::FocusMode() const
