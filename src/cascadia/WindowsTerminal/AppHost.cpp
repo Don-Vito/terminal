@@ -166,6 +166,7 @@ void AppHost::Initialize()
     _logic.FullscreenChanged({ this, &AppHost::_FullscreenChanged });
     _logic.FocusModeChanged({ this, &AppHost::_FocusModeChanged });
     _logic.AlwaysOnTopChanged({ this, &AppHost::_AlwaysOnTopChanged });
+    _logic.Minimized({ this, &AppHost::_Minimized });
 
     _logic.Create();
 
@@ -377,6 +378,12 @@ void AppHost::_AlwaysOnTopChanged(const winrt::Windows::Foundation::IInspectable
                                   const winrt::Windows::Foundation::IInspectable&)
 {
     _window->SetAlwaysOnTop(_logic.AlwaysOnTop());
+}
+
+void AppHost::_Minimized(const winrt::Windows::Foundation::IInspectable&,
+                         const winrt::Windows::Foundation::IInspectable&)
+{
+    _window->Minimize();
 }
 
 // Method Description:

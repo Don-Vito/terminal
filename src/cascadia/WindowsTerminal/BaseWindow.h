@@ -196,6 +196,11 @@ public:
         _currentDpi = GetDpiForWindow(_window.get());
     }
 
+    void Minimize()
+    {
+        PostMessage(_window.get(), WM_SYSCOMMAND, SC_MINIMIZE, 0);
+    }
+
 protected:
     using base_type = BaseWindow<T>;
     wil::unique_hwnd _window;

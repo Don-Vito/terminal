@@ -173,28 +173,47 @@ void AppCommandlineArgs::_buildParser()
 
     // Launch mode related flags
     //   -M,--maximized: Maximizes the window on launch
+    //   -m,--minimized: Minimizes the window on launch
     //   -F,--fullscreen: Fullscreens the window on launch
     //   -f,--focus: Sets the terminal into the Focus mode
-    // While fullscreen excludes both maximized and focus mode, the user can combine between the maximized and focused (-fM)
+    // While fullscreen excludes maximized, minimized and focus modes, the user can combine between the minimized/maximized and focused (-fm / -fM)
     auto maximizedCallback = [this](int64_t /*count*/) {
         _launchMode = (_launchMode.has_value() && _launchMode.value() == LaunchMode::FocusMode) ?
                           LaunchMode::MaximizedFocusMode :
                           LaunchMode::MaximizedMode;
     };
+    auto minimizedCallback = [this](int64_t /*count*/) {
+        _launchMode = (_launchMode.has_value() && _launchMode.value() == LaunchMode::FocusMode) ?
+                          LaunchMode::MinFocusMode :
+                          LaunchMode::MinimizedMode;
+    };
     auto fullscreenCallback = [this](int64_t /*count*/) {
         _launchMode = LaunchMode::FullscreenMode;
     };
     auto focusCallback = [this](int64_t /*count*/) {
-        _launchMode = (_launchMode.has_value() && _launchMode.value() == LaunchMode::MaximizedMode) ?
-                          LaunchMode::MaximizedFocusMode :
-                          LaunchMode::FocusMode;
+        if (_launchMode.has_value() && _launchMode.value() == LaunchMode::MaximizedMode)
+        {
+            _launchMode = LaunchMode::MaximizedFocusMode;
+            return;
+        }
+
+        if (_launchMode.has_value() && _launchMode.value() == LaunchMode::MinimizedMode)
+        {
+            _launchMode = LaunchMode::MinFocusMode;
+            return;
+        }
+
+        _launchMode = LaunchMode::FocusMode;
     };
 
     auto maximized = _app.add_flag_function("-M,--maximized", maximizedCallback, RS_A(L"CmdMaximizedDesc"));
+    auto minimized = _app.add_flag_function("-m,--minimized", minimizedCallback, RS_A(L"CmdMinimizedDesc"));
     auto fullscreen = _app.add_flag_function("-F,--fullscreen", fullscreenCallback, RS_A(L"CmdFullscreenDesc"));
     auto focus = _app.add_flag_function("-f,--focus", focusCallback, RS_A(L"CmdFocusDesc"));
     maximized->excludes(fullscreen);
     focus->excludes(fullscreen);
+    minimized->excludes(maximized);
+    minimized->excludes(fullscreen);
 
     // Subcommands
     _buildNewTabParser();

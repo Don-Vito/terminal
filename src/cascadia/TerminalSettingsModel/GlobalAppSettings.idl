@@ -19,11 +19,13 @@ namespace Microsoft.Terminal.Settings.Model
 
     enum LaunchMode
     {
-        DefaultMode,
+        DefaultMode,     
         MaximizedMode,
         FullscreenMode,
         FocusMode,
         MaximizedFocusMode,
+        MinimizedMode,
+        MinFocusMode,
     };
 
     [default_interface] runtimeclass GlobalAppSettings {

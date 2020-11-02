@@ -266,9 +266,14 @@ namespace winrt::TerminalApp::implementation
             {
                 _root->ToggleFullscreen();
             }
-            else if (launchMode == LaunchMode::FocusMode || launchMode == LaunchMode::MaximizedFocusMode)
+            else if (launchMode == LaunchMode::FocusMode || launchMode == LaunchMode::MaximizedFocusMode || launchMode == LaunchMode::MinFocusMode)
             {
                 _root->ToggleFocusMode();
+            }
+
+            if (launchMode == LaunchMode::MinFocusMode || launchMode == LaunchMode::MinimizedMode)
+            {
+                _minimizedHandlers(*this, nullptr);
             }
         });
         _root->Create();
@@ -1066,4 +1071,5 @@ namespace winrt::TerminalApp::implementation
     // Winrt events need a method for adding a callback to the event and removing the callback.
     // These macros will define them both for you.
     DEFINE_EVENT_WITH_TYPED_EVENT_HANDLER(AppLogic, RequestedThemeChanged, _requestedThemeChangedHandlers, winrt::Windows::Foundation::IInspectable, winrt::Windows::UI::Xaml::ElementTheme);
+    DEFINE_EVENT_WITH_TYPED_EVENT_HANDLER(AppLogic, Minimized, _minimizedHandlers, winrt::Windows::Foundation::IInspectable, winrt::Windows::Foundation::IInspectable);
 }

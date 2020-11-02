@@ -613,13 +613,15 @@
         },
         "launchMode": {
           "default": "default",
-          "description": "Defines whether the terminal will launch as maximized, full screen, or in a window. Setting this to \"focus\" is equivalent to launching the terminal in the \"default\" mode, but with the focus mode enabled. Similar, setting this to \"maximizedFocus\" will result in launching the terminal in a maximized window with the focus mode enabled.",
+          "description": "Defines whether the terminal will launch as minimized, maximized, full screen, or in a window. Setting this to \"focus\" is equivalent to launching the terminal in the \"default\" mode, but with the focus mode enabled. Similar, setting this to \"maximizedFocus\" (\"minimizedFocus\") will result in launching the terminal in a maximized (minimized) window with the focus mode enabled.",
           "enum": [
             "fullscreen",
             "maximized",
             "default",
             "focus",
-            "maximizedFocus"
+            "maximizedFocus",
+            "minimized",
+            "minimizedFocus"
           ],
           "type": "string"
         },
