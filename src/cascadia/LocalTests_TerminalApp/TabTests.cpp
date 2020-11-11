@@ -743,7 +743,6 @@ namespace TerminalAppLocalTests
         TestOnUIThread([&page]() {
             NewTerminalArgs newTerminalArgs{ 1 };
             NewTabArgs newTabArgs{ newTerminalArgs };
-
             page->_OpenNewTab(newTabArgs);
         });
         VERIFY_ARE_EQUAL(2u, page->_tabs.Size());
