@@ -194,7 +194,7 @@ namespace winrt::TerminalApp::implementation
         }
         else if (const auto& realArgs = args.ActionArgs().try_as<NewTabArgs>())
         {
-            _OpenNewTab(realArgs.TerminalArgs());
+            _OpenNewTab(realArgs);
             args.Handled(true);
         }
     }

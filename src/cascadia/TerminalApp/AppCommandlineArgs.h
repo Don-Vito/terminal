@@ -54,6 +54,10 @@ private:
         CLI::Option* profileNameOption;
         CLI::Option* startingDirectoryOption;
         CLI::Option* titleOption;
+    };
+
+    struct NewTabSubcommand : public NewTerminalSubcommand
+    {
         CLI::Option* tabColorOption;
     };
 
@@ -64,8 +68,8 @@ private:
     };
 
     // --- Subcommands ---
-    NewTerminalSubcommand _newTabCommand;
-    NewTerminalSubcommand _newTabShort;
+    NewTabSubcommand _newTabCommand;
+    NewTabSubcommand _newTabShort;
     NewPaneSubcommand _newPaneCommand;
     NewPaneSubcommand _newPaneShort;
     CLI::App* _focusTabCommand;

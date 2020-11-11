@@ -57,12 +57,6 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
             ss << fmt::format(L"title: {}, ", _TabTitle);
         }
 
-        if (_TabColor)
-        {
-            const til::color tabColor{ _TabColor.Value() };
-            ss << fmt::format(L"tabColor: {}, ", tabColor.ToHexString(true));
-        }
-
         auto s = ss.str();
         if (s.empty())
         {
@@ -120,19 +114,29 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
 
     winrt::hstring NewTabArgs::GenerateName() const
     {
+        std::wstringstream ss;
+
+        ss << RS_(L"NewTabCommandKey").c_str();
+
         winrt::hstring newTerminalArgsStr;
+
         if (_TerminalArgs)
         {
             newTerminalArgsStr = _TerminalArgs.GenerateName();
         }
 
-        if (newTerminalArgsStr.empty())
+        if (!newTerminalArgsStr.empty())
         {
-            return RS_(L"NewTabCommandKey");
+            ss << fmt::format(L", {}", newTerminalArgsStr);
         }
-        return winrt::hstring{
-            fmt::format(L"{}, {}", RS_(L"NewTabCommandKey"), newTerminalArgsStr)
-        };
+
+        if (_TabColor)
+        {
+            const til::color tabColor{ _TabColor.Value() };
+            ss << fmt::format(L", tabColor: {}", tabColor.ToHexString(true));
+        }
+
+        return winrt::hstring{ ss.str() };
     }
 
     winrt::hstring SwitchToTabArgs::GenerateName() const

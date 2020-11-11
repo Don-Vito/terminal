@@ -217,6 +217,9 @@ void AppCommandlineArgs::_buildNewTabParser()
 
     auto setupSubcommand = [this](auto& subcommand) {
         _addNewTerminalArgs(subcommand);
+        subcommand.tabColorOption = subcommand.subcommand->add_option("--tabColor",
+                                                                      _startingTabColor,
+                                                                      RS_A(L"CmdTabColorArgDesc"));
 
         // When ParseCommand is called, if this subcommand was provided, this
         // callback function will be triggered on the same thread. We can be sure
@@ -230,6 +233,13 @@ void AppCommandlineArgs::_buildNewTabParser()
             // as it might clear those options while finding the commandline
             NewTabArgs args{ _getNewTerminalArgs(subcommand) };
             newTabAction.Args(args);
+
+            if (*subcommand.tabColorOption)
+            {
+                const auto tabColor = Microsoft::Console::Utils::ColorFromHexString(_startingTabColor);
+                args.TabColor(static_cast<winrt::Windows::UI::Color>(tabColor));
+            }
+
             _startupActions.push_back(newTabAction);
         });
     };
@@ -368,10 +378,6 @@ void AppCommandlineArgs::_addNewTerminalArgs(AppCommandlineArgs::NewTerminalSubc
                                                                _startingTitle,
                                                                RS_A(L"CmdTitleArgDesc"));
 
-    subcommand.tabColorOption = subcommand.subcommand->add_option("--tabColor",
-                                                                  _startingTabColor,
-                                                                  RS_A(L"CmdTabColorArgDesc"));
-
     // Using positionals_at_end allows us to support "wt new-tab -d wsl -d Ubuntu"
     // without CLI11 thinking that we've specified -d twice.
     // There's an alternate construction where we make all subcommands "prefix commands",
@@ -431,12 +437,6 @@ NewTerminalArgs AppCommandlineArgs::_getNewTerminalArgs(AppCommandlineArgs::NewT
     if (*subcommand.titleOption)
     {
         args.TabTitle(winrt::to_hstring(_startingTitle));
-    }
-
-    if (*subcommand.tabColorOption)
-    {
-        const auto tabColor = Microsoft::Console::Utils::ColorFromHexString(_startingTabColor);
-        args.TabColor(static_cast<winrt::Windows::UI::Color>(tabColor));
     }
 
     return args;

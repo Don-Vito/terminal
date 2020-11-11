@@ -335,7 +335,7 @@ namespace TerminalAppLocalTests
                 VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
                 VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
                 VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-                VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+                VERIFY_IS_NULL(myArgs.TabColor());
                 VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
                 VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
                 auto myCommand = myArgs.TerminalArgs().Commandline();
@@ -351,7 +351,7 @@ namespace TerminalAppLocalTests
                 VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
                 VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
                 VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-                VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+                VERIFY_IS_NULL(myArgs.TabColor());
                 VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
                 VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
                 auto myCommand = myArgs.TerminalArgs().Commandline();
@@ -375,7 +375,7 @@ namespace TerminalAppLocalTests
                 VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
                 VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
                 VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-                VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+                VERIFY_IS_NULL(myArgs.TabColor());
                 VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
                 VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
                 auto myCommand = myArgs.TerminalArgs().Commandline();
@@ -422,7 +422,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
         }
@@ -442,7 +442,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"cmd", myArgs.TerminalArgs().Profile());
@@ -463,7 +463,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_FALSE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"c:\\Foo", myArgs.TerminalArgs().StartingDirectory());
@@ -484,7 +484,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"powershell.exe", myArgs.TerminalArgs().Commandline());
@@ -505,7 +505,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
             auto myCommand = myArgs.TerminalArgs().Commandline();
@@ -527,7 +527,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
             auto myCommand = myArgs.TerminalArgs().Commandline();
@@ -549,7 +549,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"Windows PowerShell", myArgs.TerminalArgs().Profile());
@@ -590,7 +590,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"wsl -d Alpine", myArgs.TerminalArgs().Commandline());
@@ -614,8 +614,8 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NOT_NULL(myArgs.TerminalArgs().TabColor());
-            VERIFY_ARE_EQUAL(til::color(myArgs.TerminalArgs().TabColor().Value()), expectedColor);
+            VERIFY_IS_NOT_NULL(myArgs.TabColor());
+            VERIFY_ARE_EQUAL(til::color(myArgs.TabColor().Value()), expectedColor);
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
         }
@@ -711,7 +711,6 @@ namespace TerminalAppLocalTests
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"wsl -d Alpine", myArgs.TerminalArgs().Commandline());
@@ -739,7 +738,6 @@ namespace TerminalAppLocalTests
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"wsl -d Alpine", myArgs.TerminalArgs().Commandline());
@@ -767,7 +765,6 @@ namespace TerminalAppLocalTests
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"wsl -d Alpine -H", myArgs.TerminalArgs().Commandline());
@@ -816,7 +813,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
         }
@@ -836,7 +833,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"cmd", myArgs.TerminalArgs().Profile());
@@ -857,7 +854,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_FALSE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"c:\\Foo", myArgs.TerminalArgs().StartingDirectory());
@@ -878,7 +875,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"powershell.exe", myArgs.TerminalArgs().Commandline());
@@ -899,7 +896,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"powershell.exe \"This is an arg with spaces\"", myArgs.TerminalArgs().Commandline());
@@ -1030,7 +1027,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
 
@@ -1043,7 +1040,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_FALSE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
             VERIFY_ARE_EQUAL(L"slpit-pane", myArgs.TerminalArgs().Commandline());
@@ -1134,7 +1131,7 @@ namespace TerminalAppLocalTests
         VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
         VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
         VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-        VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+        VERIFY_IS_NULL(myArgs.TabColor());
         VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
         VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
     }
@@ -1154,7 +1151,7 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
+            VERIFY_IS_NULL(myArgs.TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
         }
@@ -1168,7 +1165,6 @@ namespace TerminalAppLocalTests
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Commandline().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().StartingDirectory().empty());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().TabTitle().empty());
-            VERIFY_IS_NULL(myArgs.TerminalArgs().TabColor());
             VERIFY_IS_NULL(myArgs.TerminalArgs().ProfileIndex());
             VERIFY_IS_TRUE(myArgs.TerminalArgs().Profile().empty());
         }

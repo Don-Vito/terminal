@@ -508,7 +508,8 @@ namespace winrt::TerminalApp::implementation
                     }
                     else
                     {
-                        page->_OpenNewTab(newTerminalArgs);
+                        NewTabArgs newTabArgs{ newTerminalArgs };
+                        page->_OpenNewTab(newTabArgs);
                     }
                 }
             });
@@ -595,20 +596,21 @@ namespace winrt::TerminalApp::implementation
     //   optionally be provided a NewTerminalArgs, which will be used to create
     //   a tab using the values in that object.
     // Arguments:
-    // - newTerminalArgs: An object that may contain a blob of parameters to
+    // - newTabArgs: An object that may contain a blob of parameters to
     //   control which profile is created and with possible other
     //   configurations. See TerminalSettings::BuildSettings for more details.
-    void TerminalPage::_OpenNewTab(const NewTerminalArgs& newTerminalArgs)
+    void TerminalPage::_OpenNewTab(const NewTabArgs& newTabArgs)
     try
     {
+        const auto newTerminalArgs = newTabArgs ? newTabArgs.TerminalArgs() : nullptr;
         auto [profileGuid, settings] = TerminalSettings::BuildSettings(_settings, newTerminalArgs, *_bindings);
 
         const auto newTab = _CreateNewTabFromSettings(profileGuid, settings);
-        if (newTerminalArgs && newTerminalArgs.TabColor())
+        if (newTabArgs && newTabArgs.TabColor())
         {
             // We set the tab color we got from terminal arguments
             // as runtime color so it won't be reset upon settings reload
-            _GetTerminalTabImpl(newTab)->SetRuntimeTabColor(newTerminalArgs.TabColor().Value());
+            _GetTerminalTabImpl(newTab)->SetRuntimeTabColor(newTabArgs.TabColor().Value());
         }
 
         const uint32_t tabCount = _tabs.Size();
@@ -1520,7 +1522,7 @@ namespace winrt::TerminalApp::implementation
     // - splitType: one value from the TerminalApp::SplitState enum, indicating how the
     //   new pane should be split from its parent.
     // - splitMode: value from TerminalApp::SplitType enum, indicating the profile to be used in the newly split pane.
-    // - newTerminalArgs: An object that may contain a blob of parameters to
+    // - newTabArgs: An object that may contain a blob of parameters to
     //   control which profile is created and with possible other
     //   configurations. See CascadiaSettings::BuildSettings for more details.
     void TerminalPage::_SplitPane(const SplitState splitType,

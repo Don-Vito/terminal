@@ -742,21 +742,25 @@ namespace TerminalAppLocalTests
         Log::Comment(L"Create a second tab");
         TestOnUIThread([&page]() {
             NewTerminalArgs newTerminalArgs{ 1 };
-            page->_OpenNewTab(newTerminalArgs);
+            NewTabArgs newTabArgs{ newTerminalArgs };
+
+            page->_OpenNewTab(newTabArgs);
         });
         VERIFY_ARE_EQUAL(2u, page->_tabs.Size());
 
         Log::Comment(L"Create a third tab");
         TestOnUIThread([&page]() {
             NewTerminalArgs newTerminalArgs{ 2 };
-            page->_OpenNewTab(newTerminalArgs);
+            NewTabArgs newTabArgs{ newTerminalArgs };
+            page->_OpenNewTab(newTabArgs);
         });
         VERIFY_ARE_EQUAL(3u, page->_tabs.Size());
 
         Log::Comment(L"Create a fourth tab");
         TestOnUIThread([&page]() {
             NewTerminalArgs newTerminalArgs{ 3 };
-            page->_OpenNewTab(newTerminalArgs);
+            NewTabArgs newTabArgs{ newTerminalArgs };
+            page->_OpenNewTab(newTabArgs);
         });
         VERIFY_ARE_EQUAL(4u, page->_tabs.Size());
 
@@ -861,9 +865,10 @@ namespace TerminalAppLocalTests
         Log::Comment(L"Create 3 additional tabs");
         RunOnUIThread([&page]() {
             NewTerminalArgs newTerminalArgs{ 1 };
-            page->_OpenNewTab(newTerminalArgs);
-            page->_OpenNewTab(newTerminalArgs);
-            page->_OpenNewTab(newTerminalArgs);
+            NewTabArgs newTabArgs{ newTerminalArgs };
+            page->_OpenNewTab(newTabArgs);
+            page->_OpenNewTab(newTabArgs);
+            page->_OpenNewTab(newTabArgs);
         });
         VERIFY_ARE_EQUAL(4u, page->_mruTabActions.Size());
 
