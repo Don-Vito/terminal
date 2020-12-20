@@ -255,9 +255,9 @@ namespace winrt::TerminalApp::implementation
                 // Do nothing
                 args.Handled(false);
             }
-            else
+            else if (_MoveFocus(realArgs.FocusDirection()))
             {
-                _MoveFocus(realArgs.FocusDirection());
+                // Handle event only if action was  taken by  _MoveFocus
                 args.Handled(true);
             }
         }

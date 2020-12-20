@@ -179,7 +179,7 @@ namespace winrt::TerminalApp::implementation
 
         void _SelectNextTab(const bool bMoveRight);
         bool _SelectTab(const uint32_t tabIndex);
-        void _MoveFocus(const Microsoft::Terminal::Settings::Model::FocusDirection& direction);
+        bool _MoveFocus(const Microsoft::Terminal::Settings::Model::FocusDirection& direction);
 
         winrt::Microsoft::Terminal::TerminalControl::TermControl _GetActiveControl();
         std::optional<uint32_t> _GetFocusedTabIndex() const noexcept;

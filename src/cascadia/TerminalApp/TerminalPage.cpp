@@ -1443,17 +1443,22 @@ namespace winrt::TerminalApp::implementation
     // Arguments:
     // - direction: The direction to move the focus in.
     // Return Value:
-    // - <none>
-    void TerminalPage::_MoveFocus(const FocusDirection& direction)
+    // - true if action was taken
+    bool TerminalPage::_MoveFocus(const FocusDirection& direction)
     {
         if (auto index{ _GetFocusedTabIndex() })
         {
             if (auto terminalTab = _GetTerminalTabImpl(_tabs.GetAt(*index)))
             {
-                _UnZoomIfNeeded();
-                terminalTab->NavigateFocus(direction);
+                if (terminalTab->GetLeafPaneCount() > 1)
+                {
+                    _UnZoomIfNeeded();
+                    terminalTab->NavigateFocus(direction);
+                    return true;
+                }
             }
         }
+        return false;
     }
 
     TermControl TerminalPage::_GetActiveControl()
