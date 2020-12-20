@@ -32,7 +32,6 @@ namespace winrt::TerminalApp::implementation
 
         void SetCommands(Windows::Foundation::Collections::IVector<Microsoft::Terminal::Settings::Model::Command> const& actions);
         void SetTabs(Windows::Foundation::Collections::IVector<winrt::TerminalApp::TabBase> const& tabs, const bool clearList);
-        void SetKeyBindings(Microsoft::Terminal::TerminalControl::IKeyBindings bindings);
 
         void EnableCommandPaletteMode(Microsoft::Terminal::Settings::Model::CommandPaletteLaunchMode const launchMode);
 
@@ -108,8 +107,6 @@ namespace winrt::TerminalApp::implementation
 
         std::wstring _getTrimmedInput();
         void _evaluatePrefix();
-
-        Microsoft::Terminal::TerminalControl::IKeyBindings _bindings;
 
         // Tab Switcher
         Windows::Foundation::Collections::IVector<winrt::TerminalApp::FilteredCommand> _tabActions{ nullptr };

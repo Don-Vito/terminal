@@ -350,30 +350,6 @@ namespace winrt::TerminalApp::implementation
 
             e.Handled(true);
         }
-        else
-        {
-            const auto vkey = ::gsl::narrow_cast<WORD>(e.OriginalKey());
-
-            // In the interest of not telling all modes to check for keybindings, limit to TabSwitch mode for now.
-            if (_currentMode == CommandPaletteMode::TabSwitchMode)
-            {
-                auto const ctrlDown = WI_IsFlagSet(CoreWindow::GetForCurrentThread().GetKeyState(winrt::Windows::System::VirtualKey::Control), CoreVirtualKeyStates::Down);
-                auto const altDown = WI_IsFlagSet(CoreWindow::GetForCurrentThread().GetKeyState(winrt::Windows::System::VirtualKey::Menu), CoreVirtualKeyStates::Down);
-                auto const shiftDown = WI_IsFlagSet(CoreWindow::GetForCurrentThread().GetKeyState(winrt::Windows::System::VirtualKey::Shift), CoreVirtualKeyStates::Down);
-
-                auto success = _bindings.TryKeyChord({
-                    ctrlDown,
-                    altDown,
-                    shiftDown,
-                    vkey,
-                });
-
-                if (success)
-                {
-                    e.Handled(true);
-                }
-            }
-        }
     }
 
     // Method Description:
@@ -850,11 +826,6 @@ namespace winrt::TerminalApp::implementation
     Collections::IObservableVector<winrt::TerminalApp::FilteredCommand> CommandPalette::FilteredActions()
     {
         return _filteredActions;
-    }
-
-    void CommandPalette::SetKeyBindings(Microsoft::Terminal::TerminalControl::IKeyBindings bindings)
-    {
-        _bindings = bindings;
     }
 
     void CommandPalette::SetCommands(Collections::IVector<Command> const& actions)
