@@ -270,6 +270,16 @@ namespace winrt::TerminalApp::implementation
             // launched _fullscreen_, toggle fullscreen mode. This will make sure
             // that the window size is _first_ set up as something sensible, so
             // leaving fullscreen returns to a reasonable size.
+
+            ExecuteCommandlineArgs args{ _settings.GlobalSettings().StartupActions() };
+            ::TerminalApp::AppCommandlineArgs appArgs;
+            auto result = appArgs.ParseArgs(args);
+            if (result == 0)
+            {
+                auto actions = winrt::single_threaded_vector<ActionAndArgs>(std::move(appArgs.GetStartupActions()));
+                _root->ProcessStartupActions(actions, false);
+            }
+
             const auto launchMode = this->GetLaunchMode();
             if (launchMode == LaunchMode::FullscreenMode)
             {
