@@ -43,7 +43,8 @@ static const std::array<std::wstring_view, static_cast<uint32_t>(SettingsLoadWar
     USES_RESOURCE(L"FailedToParseCommandJson"),
     USES_RESOURCE(L"FailedToWriteToSettings"),
     USES_RESOURCE(L"InvalidColorSchemeInCmd"),
-    USES_RESOURCE(L"InvalidSplitSize")
+    USES_RESOURCE(L"InvalidSplitSize"),
+    USES_RESOURCE(L"FailedToParseStartupActions")
 };
 static const std::array<std::wstring_view, static_cast<uint32_t>(SettingsLoadErrors::ERRORS_SIZE)> settingsLoadErrorsLabels {
     USES_RESOURCE(L"NoProfilesText"),
@@ -263,8 +264,11 @@ namespace winrt::TerminalApp::implementation
             _settings.GlobalSettings().ShowTabsInTitlebar(false);
         }
 
-        auto startupActions = _hasStartupArguments ? _appArgs.GetStartupActions() : _ParseStartupActionsFromSettings();
-        _root->SetStartupActions(startupActions);
+        if (!_hasCommandLineStartupActions && _hasSettingsStartupActions)
+        {
+            _root->SetStartupActions(_settingsAppArgs.GetStartupActions());
+        }
+
         _root->SetSettings(_settings, false);
         _root->Loaded({ this, &AppLogic::_OnLoaded });
         _root->Initialized([this](auto&&, auto&&) {
@@ -358,26 +362,6 @@ namespace winrt::TerminalApp::implementation
     }
 
     // Method Description:
-    // - Parses startup actions that are defined in settings
-    // Arguments:
-    // - <none>
-    // Return Value:
-    // - a vector of parsed actions
-    std::vector<ActionAndArgs> AppLogic::_ParseStartupActionsFromSettings()
-    {
-        ExecuteCommandlineArgs args{ _settings.GlobalSettings().StartupActions() };
-        ::TerminalApp::AppCommandlineArgs appArgs;
-        auto result = appArgs.ParseArgs(args);
-        if (result == 0)
-        {
-            appArgs.ValidateStartupCommands();
-            return appArgs.GetStartupActions();
-        }
-
-        return {};
-    }
-
-    // Method Description:
     // - Displays a dialog for errors found while loading or validating the
     //   settings. Uses the resources under the provided  title and content keys
     //   as the title and first content of the dialog, then also displays a
@@ -448,8 +432,7 @@ namespace winrt::TerminalApp::implementation
         // Make sure the lines of text wrap
         warningsTextBlock.TextWrapping(TextWrapping::Wrap);
 
-        const auto warnings = _settings.Warnings();
-        for (const auto& warning : warnings)
+        for (const auto& warning : _warnings)
         {
             // Try looking up the warning message key for each warning.
             const auto warningText = _GetWarningText(warning);
@@ -738,7 +721,32 @@ namespace winrt::TerminalApp::implementation
                 return E_INVALIDARG;
             }
 
-            hr = _settings.Warnings().Size() == 0 ? S_OK : S_FALSE;
+            _warnings.clear();
+            for (uint32_t i = 0; i < _settings.Warnings().Size(); i++)
+            {
+                _warnings.push_back(_settings.Warnings().GetAt(i));
+            }
+
+            _hasSettingsStartupActions = false;
+            const auto startupActions = _settings.GlobalSettings().StartupActions();
+            if (!startupActions.empty())
+            {
+                _settingsAppArgs.FullResetState();
+
+                ExecuteCommandlineArgs args{ _settings.GlobalSettings().StartupActions() };
+                auto result = _settingsAppArgs.ParseArgs(args);
+                if (result == 0)
+                {
+                    _hasSettingsStartupActions = true;
+                    _settingsAppArgs.ValidateStartupCommands();
+                }
+                else
+                {
+                    _warnings.push_back(SettingsLoadWarnings::FailedToParseStartupActions);
+                }
+            }
+
+            hr = _warnings.empty() ? S_OK : S_FALSE;
         }
         catch (const winrt::hresult_error& e)
         {
@@ -1127,8 +1135,9 @@ namespace winrt::TerminalApp::implementation
         const auto result = _appArgs.ParseArgs(args);
         if (result == 0)
         {
-            _hasStartupArguments = args.size() > 1;
+            _hasCommandLineStartupActions = args.size() > 1;
             _appArgs.ValidateStartupCommands();
+            _root->SetStartupActions(_appArgs.GetStartupActions());
         }
 
         return result;
