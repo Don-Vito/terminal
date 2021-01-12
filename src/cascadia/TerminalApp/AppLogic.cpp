@@ -1129,7 +1129,6 @@ namespace winrt::TerminalApp::implementation
         {
             _hasStartupArguments = args.size() > 1;
             _appArgs.ValidateStartupCommands();
-            _root->SetStartupActions(_appArgs.GetStartupActions());
         }
 
         return result;
