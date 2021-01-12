@@ -107,6 +107,9 @@ namespace winrt::TerminalApp::implementation
 
         void _ApplyTheme(const Windows::UI::Xaml::ElementTheme& newTheme);
 
+        bool _hasStartupArguments{ false };
+        std::vector<Microsoft::Terminal::Settings::Model::ActionAndArgs> _ParseStartupActionsFromSettings();
+
         // These are events that are handled by the TerminalPage, but are
         // exposed through the AppLogic. This macro is used to forward the event
         // directly to them.

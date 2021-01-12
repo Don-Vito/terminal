@@ -263,6 +263,8 @@ namespace winrt::TerminalApp::implementation
             _settings.GlobalSettings().ShowTabsInTitlebar(false);
         }
 
+        auto startupActions = _hasStartupArguments ? _appArgs.GetStartupActions() : _ParseStartupActionsFromSettings();
+        _root->SetStartupActions(startupActions);
         _root->SetSettings(_settings, false);
         _root->Loaded({ this, &AppLogic::_OnLoaded });
         _root->Initialized([this](auto&&, auto&&) {
@@ -270,16 +272,6 @@ namespace winrt::TerminalApp::implementation
             // launched _fullscreen_, toggle fullscreen mode. This will make sure
             // that the window size is _first_ set up as something sensible, so
             // leaving fullscreen returns to a reasonable size.
-
-            ExecuteCommandlineArgs args{ _settings.GlobalSettings().StartupActions() };
-            ::TerminalApp::AppCommandlineArgs appArgs;
-            auto result = appArgs.ParseArgs(args);
-            if (result == 0)
-            {
-                auto actions = winrt::single_threaded_vector<ActionAndArgs>(std::move(appArgs.GetStartupActions()));
-                _root->ProcessStartupActions(actions, false);
-            }
-
             const auto launchMode = this->GetLaunchMode();
             if (launchMode == LaunchMode::FullscreenMode)
             {
@@ -363,6 +355,26 @@ namespace winrt::TerminalApp::implementation
 
         // After the dialog is dismissed, the dialog lock (held by `lock`) will
         // be released so another can be shown
+    }
+
+    // Method Description:
+    // - Parses startup actions that are defined in settings
+    // Arguments:
+    // - <none>
+    // Return Value:
+    // - a vector of parsed actions
+    std::vector<ActionAndArgs> AppLogic::_ParseStartupActionsFromSettings()
+    {
+        ExecuteCommandlineArgs args{ _settings.GlobalSettings().StartupActions() };
+        ::TerminalApp::AppCommandlineArgs appArgs;
+        auto result = appArgs.ParseArgs(args);
+        if (result == 0)
+        {
+            appArgs.ValidateStartupCommands();
+            return appArgs.GetStartupActions();
+        }
+
+        return {};
     }
 
     // Method Description:
@@ -1115,6 +1127,7 @@ namespace winrt::TerminalApp::implementation
         const auto result = _appArgs.ParseArgs(args);
         if (result == 0)
         {
+            _hasStartupArguments = args.size() > 1;
             _appArgs.ValidateStartupCommands();
             _root->SetStartupActions(_appArgs.GetStartupActions());
         }
